@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML Element Counter</title>
+    <link rel="stylesheet" href="style.css">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="/index.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="sub-container">
+        <div class="left-container">
+          <h1>HTML Element Counter</h1>
+          <h5>Emmanuel's Project</h5>
+        </div>
+
+        <div class="right-container">
+          <!-- Response div  -->
+
+          <div id="response"></div>
+
+          <!-- Response div  -->
+
+          <form id="elementCounterForm">
+            <label for="urlInput">URL:</label>
+            <br />
+            <input
+              type="text"
+              id="urlInput"
+              name="url"
+              class="input"
+              required
+            /><br /><br />
+            <label for="elementInput">HTML Element:</label>
+            <br />
+            <input
+              type="text"
+              id="elementInput"
+              name="element"
+              class="input"
+              required
+            /><br /><br />
+
+            <div class="buttons">
+              <input type="submit" value="Count Elements" class="button" />
+              <!-- button to reload the webpage -->
+              <button id="reloadButton" class="button">
+                <img src="Refresh.png" alt="refresh" />
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#elementCounterForm").submit(function (event) {
+          event.preventDefault();
+          var url = $("#urlInput").val();
+          var elementName = $("#elementInput").val();
+
+          var $responseDiv = $("#response"); // Cache the jQuery object
+
+          // Perform AJAX request to the PHP script
+          $.ajax({
+            type: "POST",
+            url: "count_elements.php",
+            data: { url: url, element: elementName },
+            dataType: "json",
+            success: function (response) {
+              // Display the response on the page and show the response div
+              var result =
+                "URL: " +
+                response.url +
+                " <br> Fetched on: " +
+                response.timestamp +
+                ".<br> Took: " +
+                response.response_time +
+                "msec.<br>";
+              result +=
+                "Element &lt;" +
+                elementName +
+                "&gt; appeared: " +
+                response.element_count +
+                " times in the page.";
+              $responseDiv.html(result).removeClass("hidden"); // Remove 'hidden' class to show the response div
+            },
+            error: function (error) {
+              $responseDiv
+                .html("Error: " + error.responseJSON.error)
+                .removeClass("hidden"); // Remove 'hidden' class even for errors
+            },
+          });
+        });
+
+        // Handle the click event for the reload button
+        $("#reloadButton").click(function () {
+          // Reload the webpage
+          location.reload();
+        });
+      });
+    </script>
+  </body>
+</html>

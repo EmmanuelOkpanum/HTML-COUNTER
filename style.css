@@ -1,0 +1,189 @@
+ * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: url(mainbk.png) no-repeat;
+        background-size: cover;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .sub-container {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #eaeeed;
+        border-radius: 20px;
+      }
+
+      .sub-container .left-container {
+        width: 50%;
+        height: 80vh;
+        text-align: center;
+        background: url(otherbk.png) no-repeat;
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+      }
+
+      .left-container h1 {
+        font-family: "Poppins", sans-serif;
+        font-size: 35px;
+        color: #eaeeed;
+        font-weight: 700;
+        letter-spacing: 2px;
+      }
+      .left-container h5 {
+        font-family: "Poppins", sans-serif;
+        font-size: 20px;
+        color: #eaeeed;
+        font-weight: 300;
+        letter-spacing: 2px;
+      }
+
+      .sub-container .right-container {
+        position: relative;
+        width: 50%;
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .right-container #response {
+        position: relative;
+        width: 350px;
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: "Poppins", sans-serif;
+        font-size: 12px;
+        color: #333;
+        font-weight: 500;
+        letter-spacing: 2px;
+        line-height: 25px;
+      }
+
+      .right-container #elementCounterForm label {
+        color: #333;
+        font-family: "Poppins", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 2px;
+      }
+
+      .right-container form .input {
+        outline: none;
+        border: none;
+        background: none;
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        font-size: 12px;
+        color: #333;
+        font-weight: 300;
+        letter-spacing: 2px;
+        border-bottom: 1px solid #38aa93;
+        width: 250px;
+        padding: 10px;
+        transition: 0.5s;
+        caret-color: #38aa93;
+      }
+      .right-container form .input:focus {
+        border-bottom: 1px solid#333 !important;
+      }
+
+      form .buttons {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+        margin-top: 20px;
+      }
+      .buttons .button {
+        padding: 15px;
+        background: #38aa93;
+        color: #eaeeed;
+        font-family: "Poppins", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        transition: 0.5s;
+        cursor: pointer;
+      }
+      .buttons .button:nth-child(1):hover {
+        background: #eaeeed;
+        color: #38aa93;
+        border: 1px solid #38aa93;
+        transform: scale(1.05);
+      }
+      .buttons .button:nth-child(2) {
+        background: none;
+        transform-origin: center center;
+        animation: rotate 3s linear infinite;
+      }
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+      }
+      .button img {
+        width: 30px;
+      }
+
+      @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          overflow-x: hidden;
+          background: none;
+        }
+        .sub-container {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        .sub-container .left-container {
+          width: 100%;
+          height: 50vh;
+        }
+        .sub-container .right-container {
+          width: 100%;
+          height: initial;
+          margin-bottom: 20px;
+        }
+        .right-container #response {
+          width: 100%;
+          overflow: hidden;
+        }
+      }
