@@ -31,6 +31,8 @@
 
           <!-- Response div  -->
 
+
+
           <form id="elementCounterForm">
             <label for="urlInput">URL:</label>
             <br />
@@ -65,55 +67,52 @@
 
 
 
-    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      $(document).ready(function () {
-        $("#elementCounterForm").submit(function (event) {
-          event.preventDefault();
-          var url = $("#urlInput").val();
-          var elementName = $("#elementInput").val();
+        $(document).ready(function () {
+            $('#elementCounterForm').submit(function (event) {
+                event.preventDefault();
+                var url = $('#urlInput').val();
+                var elementName = $('#elementInput').val();
 
-          var $responseDiv = $("#response"); // Cache the jQuery object
+                // Show loading message while waiting for the response
+                $('#response').html('Loading...');
 
-          // Perform AJAX request to the PHP script
-          $.ajax({
-            type: "POST",
-            url: "count_elements.php",
-            data: { url: url, element: elementName },
-            dataType: "json",
-            success: function (response) {
-              // Display the response on the page and show the response div
-              var result =
-                "URL: " +
-                response.url +
-                " <br> Fetched on: " +
-                response.timestamp +
-                ".<br> Took: " +
-                response.response_time +
-                "msec.<br>";
-              result +=
-                "Element &lt;" +
-                elementName +
-                "&gt; appeared: " +
-                response.element_count +
-                " times in the page.";
-              $responseDiv.html(result).removeClass("hidden"); // Remove 'hidden' class to show the response div
-            },
-            error: function (error) {
-              $responseDiv
-                .html("Error: " + error.responseJSON.error)
-                .removeClass("hidden"); // Remove 'hidden' class even for errors
-            },
-          });
+                // Set a timeout of 3 seconds (3000 milliseconds)
+                var timeout = 4000;
+
+                var xhr = $.ajax({
+                    type: 'POST',
+                    url: 'count_elements.php',
+                    data: { url: url, element: elementName },
+                    dataType: 'json',
+                    timeout: timeout, // Set the timeout
+                    success: function (response) {
+                        // Display the response on the page
+                        var result = "URL " + response.url + " Fetched on " + response.timestamp + ", took " + response.response_time + "msec.<br>";
+                        result += "Element &lt;" + elementName + "&gt; appeared " + response.element_count + " times in the page.";
+                        $('#response').html(result);
+
+                        // Hide the "Blocked" message if it was displayed
+                        $('#blocked-message').hide();
+                    },
+                    error: function (xhr, status, error) {
+                        if (status === "timeout") {
+                            // Display a message for a timeout
+                            $('#response').html('Request timed out. This website may be blocking scraping.');
+
+                            // Show the "Blocked" message
+                            $('#blocked-message').show();
+                        } else {
+                            $('#response').html("Error: " + xhr.responseJSON.error);
+                        }
+                    }
+                });
+            });
         });
-
-        // Handle the click event for the reload button
-        $("#reloadButton").click(function () {
-          // Reload the webpage
-          location.reload();
-        });
-      });
     </script>
+
+
+    
   </body>
 </html>
